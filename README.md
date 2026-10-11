@@ -47,3 +47,9 @@ Any static host can publish `dist/`. For Vercel: framework **Other**, build `npm
 ## Reference and scope
 
 Reference: `https://novapersona.webflow.io/`, including its About and Contact layouts. The supplied `.h2d` file could not be materialized in this environment, so the live site was used. This is an independently implemented adaptation, not the original licensed Webflow template or a claim of pixel-for-pixel equivalence. Shared component architecture and Jamiu's real content intentionally replace the template's placeholders.
+
+## Extended portfolio
+
+The Explore navigation includes Certifications & recognition, Brand & identity, Logos & marks, Design systems and AI practice. Original documents, issuer verification links and artwork live in `collections` in `src/content.js`. Brand cards include expandable page galleries. These collections all render through the shared `Card` primitive and `CollectionPage` renderer. Seven additional original case studies are in `extendedProjects`; Academic Proofreader has an overview page. The `/certificates/` route aliases `/credentials/`.
+
+The AI practice page describes the work and tools. The original portfolio's backend agent is not connected in this static preview.

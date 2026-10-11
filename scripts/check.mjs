@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import {readFile,readdir} from 'node:fs/promises';
-import {projects,notes} from '../src/content.js';
+import {projects,notes,extendedProjects} from '../src/content.js';
 import {Card,Button,escape} from '../src/components/ui.js';
-import {Home,About,ServicePage,CasePage,BlogPage,Contact,ProjectPage,NotePage,StyleGuide} from '../src/pages.js';
-const routes=new Set(['/','/about-me/','/service/','/case-study/','/blog/','/contact/','/style-guide/',...projects.map(p=>`/work/${p.id}/`),...notes.map(n=>`/notes/${n.id}/`)]);
-const pages=[Home(),About(),ServicePage(),CasePage(),BlogPage(),Contact(),StyleGuide(),...projects.map(ProjectPage),...notes.map(NotePage)];
+import {Home,About,ServicePage,CasePage,BlogPage,Contact,ProjectPage,NotePage,StyleGuide,CollectionPage,ExtendedProjectPage,AcademicProofreader} from '../src/pages.js';
+const routes=new Set(['/','/about-me/','/service/','/case-study/','/blog/','/contact/','/style-guide/','/credentials/','/certificates/','/brand/','/logos/','/system/','/ai/','/academic-proofreader/',...extendedProjects.map(p=>`/work/${p.id}/`),...projects.map(p=>`/work/${p.id}/`),...notes.map(n=>`/notes/${n.id}/`)]);
+const pages=[Home(),About(),ServicePage(),CasePage(),BlogPage(),Contact(),StyleGuide(),...['credentials','brand','logos','system','ai'].map(CollectionPage),AcademicProofreader(),...extendedProjects.map(ExtendedProjectPage),...projects.map(ProjectPage),...notes.map(NotePage)];
 for(const html of pages){for(const [,href] of html.matchAll(/href="(\/[^"#]*\/?)"/g)){assert(routes.has(href),`Unknown internal route ${href}`);}assert(!/undefined|\[object Object\]/.test(html),'Missing content');}
 assert.equal(new Set(projects.map(p=>p.id)).size,projects.length);
 assert.equal(new Set(notes.map(n=>n.id)).size,notes.length);

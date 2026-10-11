@@ -1,10 +1,14 @@
-import {projects,notes,person} from './content.js';
+import {projects,notes,person,extendedProjects} from './content.js';
 import {Header,Footer} from './components/layout.js';
-import {Home,About,ServicePage,CasePage,BlogPage,Contact,ProjectPage,NotePage,StyleGuide,NotFound} from './pages.js';
+import {Home,About,ServicePage,CasePage,BlogPage,Contact,ProjectPage,NotePage,StyleGuide,NotFound,CollectionPage,ExtendedProjectPage,AcademicProofreader} from './pages.js';
 const path = location.pathname.replace(/\/+$/, '') + '/';
 const routes={'/':Home,'/about-me/':About,'/service/':ServicePage,'/case-study/':CasePage,'/blog/':BlogPage,'/contact/':Contact,'/style-guide/':StyleGuide};
+['credentials','brand','logos','system','ai'].forEach(id=>routes[`/${id}/`]=()=>CollectionPage(id));
+routes['/certificates/']=routes['/credentials/'];
+routes['/academic-proofreader/']=AcademicProofreader;
 let render=routes[path],title=path==='/'?'Product Designer':path.split('/')[1].replaceAll('-',' ');
 if(path.startsWith('/work/')) {const p=projects.find(p=>path===`/work/${p.id}/`); if(p){render=()=>ProjectPage(p);title=p.name;}}
+if(path.startsWith('/work/')&&!render){const p=extendedProjects.find(p=>path===`/work/${p.id}/`);if(p){render=()=>ExtendedProjectPage(p);title=p.name;}}
 if(path.startsWith('/notes/')) {const n=notes.find(n=>path===`/notes/${n.id}/`); if(n){render=()=>NotePage(n);title=n.title;}}
 document.title=`${title.charAt(0).toUpperCase()+title.slice(1)} — ${person.name}`;
 document.getElementById('app').innerHTML=Header(path)+`<main id="main">${(render||NotFound)()}</main>`+Footer();
