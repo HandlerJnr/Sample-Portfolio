@@ -7,7 +7,7 @@ const app=(await readFile('src/app.js','utf8')).replace(/^import .*;\n/gm,'').re
 const css=(await Promise.all(['src/styles/tokens.css','src/styles/site.css'].map(path=>readFile(path,'utf8')))).join('\n');
 let html=await readFile('index.html','utf8');
 html=html.replace(/<link rel="stylesheet" href="\/src\/styles\/[^\"]+">/g,'').replace('<link rel="icon" href="/favicon.svg" type="image/svg+xml">','');
-const script=`${definitions}\nlet previewPath='/';\nfunction renderPreview(){\n${app}\ndocument.querySelectorAll('a[href^="/"]').forEach(a=>{a.href='#'+a.getAttribute('href');});\n}\nwindow.addEventListener('hashchange',()=>{if(location.hash.startsWith('#/')){previewPath=location.hash.slice(1).split('#')[0];renderPreview();window.scrollTo(0,0);}});\nif(location.hash.startsWith('#/'))previewPath=location.hash.slice(1);\nrenderPreview();`;
+const script=`${definitions}\nlet previewPath='/';\nfunction renderPreview(){\n${app}\ndocument.querySelectorAll('a[href^="/"]').forEach(a=>{a.href=location.href.split('#')[0]+'#'+a.getAttribute('href');});\n}\nwindow.addEventListener('hashchange',()=>{if(location.hash.startsWith('#/')){previewPath=location.hash.slice(1).split('#')[0];renderPreview();window.scrollTo(0,0);}});\nif(location.hash.startsWith('#/'))previewPath=location.hash.slice(1);\nrenderPreview();`;
 html=html.replace('</head>',`<style>${css}</style></head>`).replace('<script type="module" src="/src/app.js"></script>',`<script>${script.replace(/<\/script/gi,'<\\/script')}</script>`);
 await mkdir('dist',{recursive:true});
 await writeFile('dist/preview.html',html);
