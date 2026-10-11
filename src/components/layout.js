@@ -1,0 +1,12 @@
+import {person} from '../content.js';
+import {Button, escape} from './ui.js';
+export const navigation=[['Home','/'],['About','/about-me/'],['Services','/service/'],['Case Study','/case-study/'],['Notes','/blog/'],['Contact','/contact/']];
+export function Header(path) {
+  return `<header class="site-header"><div class="header-inner"><a class="brand" href="/" aria-label="Jamiu Abdulfatai home"><span class="brand-symbol" aria-hidden="true">J</span><span>Jamiu<span class="brand-light">designs</span></span></a><button class="menu-toggle" aria-controls="primary-navigation" aria-expanded="false" aria-label="Open navigation"><span></span><span></span></button><nav id="primary-navigation" class="primary-navigation" aria-label="Main navigation">${navigation.map(([label,url])=>`<a href="${url}" ${path===url||url!=='/'&&path.startsWith(url)?'aria-current="page"':''}>${label}</a>`).join('')}</nav>${Button({label:'Contact Now',href:'/contact/',variant:'dark-accent'})}</div></header>`;
+}
+export function Footer() {
+  return `<footer class="site-footer"><div class="container"><div class="footer-top"><h2>Let’s Work <span>Together</span></h2><div class="footer-contact"><p>Have a product, a problem<br>or a placement opportunity?</p>${Button({label:'Let’s talk',href:`mailto:${person.email}`,variant:'accent'})}</div></div><div class="footer-details"><div><small>Email me</small><a href="mailto:${person.email}">${person.email}</a></div><div><small>Based in</small><p>${person.location}<br>United Kingdom</p></div><div><small>Find me online</small><a href="${person.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="${person.github}" target="_blank" rel="noopener noreferrer">GitHub</a></div></div><div class="footer-bottom"><span>© ${new Date().getFullYear()} ${escape(person.name)}</span><div><a href="/about-me/">About</a><a href="/case-study/">Work</a><a href="/style-guide/">Style guide</a><a href="${person.cv}" target="_blank" rel="noopener noreferrer">View CV</a></div></div></div></footer>`;
+}
+export function CTA() {
+  return `<section class="cta-section"><div class="container"><h2>Have a complex product?<br><span>Let’s make it clear.</span></h2><p>I’m open to product design work and a placement as part of my MSc at the University of Brighton.</p>${Button({label:'Let’s Connect',href:'/contact/',variant:'accent'})}<div class="cta-facts"><span>Fintech & marketplaces</span><span>Web & mobile</span><span>Brighton, UK</span></div></div></section>`;
+}
